@@ -1,0 +1,20 @@
+/* main.css - global resets, typography and utilities */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.app {
+  background: #f7f7f7;
+  color: #111;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* utility classes */
+.hidden {
+  display: none !important;
+}
