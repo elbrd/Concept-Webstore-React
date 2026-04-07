@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { getProducts } from "../scripts/api/api";
 import Productcard from "./Productcard";
 
-const Productgrid = () => {
+const Productgrid = ({ addToCart, removeFromCart }) => {
   const [products, setProducts] = useState([]);
+
   useEffect(() => {
     async function fetchData() {
       const data = await getProducts();
@@ -12,12 +13,18 @@ const Productgrid = () => {
 
     fetchData();
   }, []);
-  console.log(products);
 
   return (
     <main className="product-grid">
       {products.map((product) => {
-        return <Productcard product={product} key={product.id} />;
+        return (
+          <Productcard
+            product={product}
+            key={product.id}
+            addToCart={addToCart}
+            removeFromCart={removeFromCart}
+          />
+        );
       })}
     </main>
   );

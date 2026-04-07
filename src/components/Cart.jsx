@@ -1,6 +1,11 @@
-const Cart = () => {
+const Cart = ({ toggleCartdropdown }) => {
   return (
-    <button className="cart-btn">
+    <button
+      className="cart-btn"
+      onClick={() => {
+        toggleCartdropdown(true);
+      }}
+    >
       CART (<span className="cart-count">0</span>)
     </button>
   );
