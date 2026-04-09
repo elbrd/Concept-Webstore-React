@@ -1,12 +1,9 @@
 import "../styles/components/cart.css";
 import Cartitems from "./Cartitems";
 
-const Cartdropdown = ({
-  toggleCartdropdown,
-  cart,
-  addToCart,
-  removeFromCart,
-}) => {
+const Cartdropdown = ({ cartObj }) => {
+  const { cart, addToCart, removeFromCart, toggleCartdropdown } = cartObj;
+
   return (
     <aside className="cart-dropdown">
       <h3>Cart</h3>

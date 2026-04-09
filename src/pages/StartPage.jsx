@@ -1,7 +1,9 @@
+import { useOutletContext } from "react-router-dom";
 import Hero from "../components/Hero";
 import Productgrid from "../components/Productgrid";
 
-const StartPage = ({ addToCart, removeFromCart }) => {
+const StartPage = () => {
+  const { addToCart, removeFromCart } = useOutletContext();
   return (
     <div className="page">
       <Hero />

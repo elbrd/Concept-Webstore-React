@@ -23,7 +23,7 @@ const Productcard = ({ product, addToCart, removeFromCart }) => {
       <div className="product-card__image-container">
         <img
           className="product-card__image"
-          src={product.image}
+          src={product.thumbnail}
           alt={product.title}
         />
       </div>

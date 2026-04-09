@@ -7,10 +7,9 @@ import "./styles/components/cards.css";
 import "./styles/components/navbar.css";
 import "./styles/components/buttons.css";
 import App from "./App.jsx";
-import { BrowserRouter } from "react-router-dom";
 
 createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
+  <StrictMode>
     <App />
-  </BrowserRouter>,
+  </StrictMode>,
 );
