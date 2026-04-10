@@ -3,62 +3,10 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import { useState } from "react";
 import Cartdropdown from "./components/Cartdropdown";
+import { useCart } from "./hooks/useCart";
 
 function Layout() {
-  const [cart, setCart] = useState([]);
-
-  // Add to cart
-  function addToCart(item) {
-    const existingProduct = cart.find((i) => i.id === item.id);
-
-    if (existingProduct) {
-      setCart((prevCart) =>
-        prevCart.map((i) => {
-          if (i.id === item.id) {
-            return {
-              ...i,
-              quantity: i.quantity + 1,
-            };
-          }
-          return i;
-        }),
-      );
-    } else {
-      setCart((prevCart) => [
-        ...prevCart,
-        {
-          id: item.id,
-          image: item.thumbnail,
-          title: item.title,
-          price: item.price,
-          quantity: 1,
-        },
-      ]);
-    }
-  }
-
-  // Remove from cart
-  function removeFromCart(item) {
-    const existingProduct = cart.find((i) => i.id === item.id);
-
-    if (!existingProduct) return;
-
-    if (existingProduct.quantity > 1) {
-      setCart((prevCart) =>
-        prevCart.map((i) => {
-          if (i.id === item.id) {
-            return {
-              ...i,
-              quantity: i.quantity - 1,
-            };
-          }
-          return i;
-        }),
-      );
-    } else {
-      setCart((prevCart) => prevCart.filter((i) => i.id !== item.id));
-    }
-  }
+  const { cart, setCart, addToCart, removeFromCart } = useCart();
 
   // Toggle visibility cart dropdown
   const [cartdropdown, toggleCartdropdown] = useState(false);

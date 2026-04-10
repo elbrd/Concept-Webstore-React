@@ -1,5 +1,8 @@
-const Detailcard = ({ product }) => {
-  console.log(product);
+import { useState } from "react";
+
+const Detailcard = ({ product, addToCart }) => {
+  const [description, toggleDescription] = useState(false);
+
   return (
     <>
       <section className="product-gallery">
@@ -15,15 +18,37 @@ const Detailcard = ({ product }) => {
 
         <p className="product-category">{product.category}</p>
 
-        <p className="product-description short"></p>
+        {!description ? (
+          product?.description && (
+            <p className="product-description short">
+              {product.description.slice(0, 120)}...
+            </p>
+          )
+        ) : (
+          <p className="product-description long">{product.description}</p>
+        )}
 
-        <p className="product-description long hidden">{product.description}</p>
-
-        <button className="btn-read-more">READ MORE</button>
+        {!description ? (
+          <button
+            onClick={() => toggleDescription(true)}
+            className="btn-read-more"
+          >
+            READ MORE
+          </button>
+        ) : (
+          <button
+            onClick={() => toggleDescription(false)}
+            className="btn-read-more"
+          >
+            READ LESS
+          </button>
+        )}
 
         <div className="product-bottom">
           <span className="product-price">{Math.ceil(product.price)} sek</span>
-          <button className="btn-add">ADD TO CART</button>
+          <button onClick={() => addToCart(product)} className="btn-add">
+            ADD TO CART
+          </button>
         </div>
       </section>
     </>
