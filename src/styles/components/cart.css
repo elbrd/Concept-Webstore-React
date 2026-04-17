@@ -61,6 +61,15 @@
   background: #333;
 }
 
+.cart-checkout-btn--disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
+.cart-checkout-btn--disabled:hover {
+  background: gray;
+}
+
 /* cart card inside dropdown */
 .cart-card {
   display: flex;

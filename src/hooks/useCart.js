@@ -64,5 +64,37 @@ export const useCart = () => {
     }
   };
 
-  return { cart, setCart, addToCart, removeFromCart };
+  // Calculate cart
+  const [subtotal, setSubtotal] = useState(null);
+  const [shipping, setShipping] = useState(0);
+  const [total, setTotal] = useState(null);
+
+  const calculateSubtotal = (cart) => {
+    let currentSubtotal = 0;
+
+    cart.forEach((item) => {
+      currentSubtotal = Math.ceil(currentSubtotal + item.price * item.quantity);
+    });
+
+    setSubtotal(currentSubtotal);
+  };
+
+  useEffect(() => {
+    setTotal(subtotal + shipping);
+  }, [subtotal, shipping]);
+
+  useEffect(() => {
+    calculateSubtotal(cart);
+  }, [cart]);
+
+  return {
+    cart,
+    setCart,
+    addToCart,
+    removeFromCart,
+    subtotal,
+    shipping,
+    setShipping,
+    total,
+  };
 };

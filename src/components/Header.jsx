@@ -12,7 +12,11 @@ const Header = ({ cartObj }) => {
         PLACEHOLDER
       </h1>
       <a className="orders-btn">ORDERS</a>
-      <Cart cart={cart} toggleCartdropdown={toggleCartdropdown} />
+      {location.pathname !== "/checkout" ? (
+        <Cart cart={cart} toggleCartdropdown={toggleCartdropdown} />
+      ) : (
+        ""
+      )}
     </header>
   );
 };

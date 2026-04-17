@@ -1,12 +1,27 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cartdropdown from "./components/Cartdropdown";
 import { useCart } from "./hooks/useCart";
 
 function Layout() {
-  const { cart, setCart, addToCart, removeFromCart } = useCart();
+  const {
+    cart,
+    setCart,
+    addToCart,
+    removeFromCart,
+    subtotal,
+    shipping,
+    setShipping,
+    total,
+  } = useCart();
+
+  const location = useLocation();
+
+  useEffect(() => {
+    toggleCartdropdown(false);
+  }, [location.pathname]);
 
   // Toggle visibility cart dropdown
   const [cartdropdown, toggleCartdropdown] = useState(false);
@@ -18,13 +33,17 @@ function Layout() {
     addToCart: addToCart,
     removeFromCart: removeFromCart,
     toggleCartdropdown: toggleCartdropdown,
+    subtotal: subtotal,
+    shipping: shipping,
+    setShipping: setShipping,
+    total: total,
   };
 
   return (
     <div className="app">
       <Header cartObj={cartObj} />
       {!cartdropdown ? "" : <Cartdropdown cartObj={cartObj} />}
-      <Outlet context={{ addToCart, removeFromCart }} />
+      <Outlet context={{ cartObj }} />
       <Footer />
     </div>
   );

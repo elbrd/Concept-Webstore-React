@@ -12,22 +12,15 @@ const Cartitems = ({ item, addToCart, removeFromCart }) => {
         <p className="cart-card__price">{Math.ceil(item.price)} sek</p>
 
         <div>
-          <button className="plus-minus-btn" data-action="remove">
-            <i
-              className="fa-solid fa-minus"
-              onClick={() => {
-                removeFromCart(item);
-              }}
-            ></i>
+          <button
+            className="plus-minus-btn"
+            onClick={() => removeFromCart(item)}
+          >
+            <i className="fa-solid fa-minus"></i>
           </button>
 
-          <button className="plus-minus-btn" data-action="add">
-            <i
-              className="fa-solid fa-plus"
-              onClick={() => {
-                addToCart(item);
-              }}
-            ></i>
+          <button className="plus-minus-btn" onClick={() => addToCart(item)}>
+            <i className="fa-solid fa-plus"></i>
           </button>
         </div>
 
