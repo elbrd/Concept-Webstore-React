@@ -2,9 +2,15 @@ import { useOutletContext } from "react-router-dom";
 import Checkoutitems from "../components/Checkoutitems";
 import "../styles/pages/checkout.css";
 import { useEffect, useState } from "react";
+import { useOrdersStore } from "../stores/useOrdersStore";
 
 const CheckoutPage = () => {
   const { cartObj } = useOutletContext();
+  const { orders, createOrder } = useOrdersStore();
+
+  useEffect(() => {
+    console.log(orders);
+  }, [orders]);
 
   return (
     <div className="checkout">
@@ -52,7 +58,19 @@ const CheckoutPage = () => {
           </div>
         </div>
 
-        <button className="checkout-btn">Complete Order</button>
+        <button
+          className="checkout-btn"
+          onClick={() =>
+            createOrder(
+              cartObj.cart,
+              cartObj.subtotal,
+              cartObj.shipping,
+              cartObj.total,
+            )
+          }
+        >
+          Complete Order
+        </button>
         <a href="index.html" className="checkout-back">
           Continue Shopping
         </a>

@@ -8,7 +8,6 @@ import { useCart } from "./hooks/useCart";
 function Layout() {
   const {
     cart,
-    setCart,
     addToCart,
     removeFromCart,
     subtotal,
@@ -29,7 +28,6 @@ function Layout() {
   // Cart object
   const cartObj = {
     cart: cart,
-    setCart: setCart,
     addToCart: addToCart,
     removeFromCart: removeFromCart,
     toggleCartdropdown: toggleCartdropdown,
