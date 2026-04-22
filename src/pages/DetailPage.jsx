@@ -4,7 +4,7 @@ import Detailcard from "../components/Detailcard";
 import { getProduct } from "../scripts/api/api";
 
 const DetailPage = () => {
-  const { addToCart } = useOutletContext();
+  const { cartObj } = useOutletContext();
 
   const { id } = useParams();
 
@@ -21,7 +21,7 @@ const DetailPage = () => {
 
   return (
     <main className="product-page">
-      <Detailcard product={product} addToCart={addToCart} />
+      <Detailcard product={product} addToCart={cartObj.addToCart} />
     </main>
   );
 };
