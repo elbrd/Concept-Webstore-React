@@ -182,15 +182,17 @@
   transition: all 0.2s ease;
 }
 
-.checkout-btn:disabled {
-  opacity: 0.5;
+.checkout-btn--disabled {
+  background-color: gray;
   cursor: not-allowed;
-  transition: none;
-  transform: none;
 }
 
 .checkout-btn:hover {
   background: #333;
+}
+
+.checkout-btn--disabled:hover {
+  background: gray;
 }
 
 .checkout-btn:active {

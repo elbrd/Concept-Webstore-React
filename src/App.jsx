@@ -3,6 +3,8 @@ import Layout from "./Layout";
 import StartPage from "./pages/StartPage";
 import DetailPage from "./pages/DetailPage";
 import CheckoutPage from "./pages/CheckoutPage";
+import ThankyouPage from "./pages/ThankyouPage";
+import OrdersPage from "./pages/OrdersPage";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +22,14 @@ const router = createBrowserRouter([
       {
         path: "checkout",
         element: <CheckoutPage />,
+      },
+      {
+        path: "thankyou/:ordernumber",
+        element: <ThankyouPage />,
+      },
+      {
+        path: "orders",
+        element: <OrdersPage />,
       },
     ],
   },

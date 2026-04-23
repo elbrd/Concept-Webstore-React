@@ -64,6 +64,11 @@ export const useCart = () => {
     }
   };
 
+  // Clear cart
+  const clearCart = () => {
+    setCart([]);
+  };
+
   // Calculate cart
   const [subtotal, setSubtotal] = useState(null);
   const [shipping, setShipping] = useState(0);
@@ -92,6 +97,7 @@ export const useCart = () => {
     setCart,
     addToCart,
     removeFromCart,
+    clearCart,
     subtotal,
     shipping,
     setShipping,

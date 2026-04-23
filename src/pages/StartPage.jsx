@@ -1,11 +1,12 @@
 import { useOutletContext } from "react-router-dom";
 import Hero from "../components/Hero";
 import Productgrid from "../components/Productgrid";
+import "../styles/pages/start.css";
 
 const StartPage = () => {
   const { cartObj } = useOutletContext();
   return (
-    <div className="page">
+    <div className="start-page">
       <Hero />
       <section className="products-section">
         <h2 className="products-title">Collection</h2>

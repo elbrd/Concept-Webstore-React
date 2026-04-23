@@ -4,25 +4,38 @@ import Header from "./components/Header";
 import { useEffect, useState } from "react";
 import Cartdropdown from "./components/Cartdropdown";
 import { useCart } from "./hooks/useCart";
+import { useOrdersStore } from "./stores/useOrdersStore";
 
 function Layout() {
   const {
     cart,
     addToCart,
     removeFromCart,
+    clearCart,
     subtotal,
     shipping,
     setShipping,
     total,
   } = useCart();
 
+  // Get orders from ls
+  const setOrders = useOrdersStore((state) => state.setOrders);
+
+  useEffect(() => {
+    const storedOrders = JSON.parse(localStorage.getItem("orders"));
+
+    if (storedOrders) {
+      setOrders(storedOrders);
+    }
+  }, []);
+
+  // Toggle visibility cart dropdown
   const location = useLocation();
 
   useEffect(() => {
     toggleCartdropdown(false);
   }, [location.pathname]);
 
-  // Toggle visibility cart dropdown
   const [cartdropdown, toggleCartdropdown] = useState(false);
 
   // Cart object
@@ -30,6 +43,7 @@ function Layout() {
     cart: cart,
     addToCart: addToCart,
     removeFromCart: removeFromCart,
+    clearCart: clearCart,
     toggleCartdropdown: toggleCartdropdown,
     subtotal: subtotal,
     shipping: shipping,

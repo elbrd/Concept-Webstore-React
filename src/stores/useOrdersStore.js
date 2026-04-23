@@ -1,33 +1,46 @@
 import { create } from "zustand";
+import { useNavigate } from "react-router-dom";
 
 export const useOrdersStore = create((set) => ({
   orders: [],
+  latestOrder: null,
 
-  createOrder: (cart, subtotal, shipping, total) => {
-    if (cart.length === 0) return;
+  setOrders: (storedOrders) => {
+    localStorage.setItem("orders", JSON.stringify(storedOrders));
 
-    const orderNumber = `#${Date.now().toString().slice(-6)}`;
+    set({
+      orders: storedOrders,
+    });
+  },
 
+  findOrder: (orderNmbr) => {
+    set((state) => {
+      const order = state.orders.find((o) => o.ordernumber === orderNmbr);
+      return { latestOrder: order };
+    });
+  },
+
+  createOrder: (cart, subtotal, shipping, total, orderNumber) => {
     const orderDate = new Date();
     const orderDateFormatted = `${orderDate.toLocaleString("sv-SE")}`;
 
+    const newOrder = {
+      ordernumber: orderNumber,
+      orderdate: orderDateFormatted,
+      items: [...cart],
+      shipping: {
+        cost: shipping,
+      },
+      subtotal,
+      total,
+    };
+
     set((state) => {
-      return {
-        orders: [
-          ...state.orders,
-          {
-            ordernumber: orderNumber,
-            orderdate: orderDateFormatted,
-            items: [...cart],
-            shipping: {
-              //   option: shippingOption,
-              cost: shipping,
-            },
-            subtotal,
-            total,
-          },
-        ],
-      };
+      const updatedOrders = [...state.orders, newOrder];
+
+      localStorage.setItem("orders", JSON.stringify(updatedOrders));
+
+      return { orders: updatedOrders };
     });
   },
 }));

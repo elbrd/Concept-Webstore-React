@@ -1,3 +1,5 @@
+import "../styles/components/navbar.css";
+
 const Footer = () => {
   return (
     <footer className="footer">

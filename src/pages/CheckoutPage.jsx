@@ -1,16 +1,32 @@
-import { useOutletContext } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import Checkoutitems from "../components/Checkoutitems";
 import "../styles/pages/checkout.css";
 import { useEffect, useState } from "react";
 import { useOrdersStore } from "../stores/useOrdersStore";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutPage = () => {
   const { cartObj } = useOutletContext();
   const { orders, createOrder } = useOrdersStore();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(orders);
-  }, [orders]);
+  const completeOrderHandler = () => {
+    if (cartObj.cart.length === 0) return;
+
+    const orderNumber = Date.now().toString().slice(-6);
+
+    createOrder(
+      cartObj.cart,
+      cartObj.subtotal,
+      cartObj.shipping,
+      cartObj.total,
+      orderNumber,
+    );
+
+    cartObj.clearCart();
+
+    navigate(`/thankyou/${orderNumber}`);
+  };
 
   return (
     <div className="checkout">
@@ -59,21 +75,16 @@ const CheckoutPage = () => {
         </div>
 
         <button
-          className="checkout-btn"
-          onClick={() =>
-            createOrder(
-              cartObj.cart,
-              cartObj.subtotal,
-              cartObj.shipping,
-              cartObj.total,
-            )
-          }
+          className={`checkout-btn ${cartObj.cart.length === 0 ? "checkout-btn--disabled" : ""}`}
+          onClick={() => {
+            completeOrderHandler();
+          }}
         >
           Complete Order
         </button>
-        <a href="index.html" className="checkout-back">
+        <Link to="/" className="checkout-back">
           Continue Shopping
-        </a>
+        </Link>
       </section>
     </div>
   );

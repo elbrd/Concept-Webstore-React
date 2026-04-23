@@ -2,6 +2,7 @@ import { useOutletContext, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Detailcard from "../components/Detailcard";
 import { getProduct } from "../scripts/api/api";
+import "../styles/pages/product.css";
 
 const DetailPage = () => {
   const { cartObj } = useOutletContext();

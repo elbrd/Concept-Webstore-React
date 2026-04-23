@@ -3,8 +3,14 @@ import "../styles/components/cart.css";
 import Cartitems from "./Cartitems";
 
 const Cartdropdown = ({ cartObj }) => {
-  const { cart, addToCart, removeFromCart, toggleCartdropdown, total } =
-    cartObj;
+  const {
+    cart,
+    addToCart,
+    removeFromCart,
+    clearCart,
+    toggleCartdropdown,
+    total,
+  } = cartObj;
 
   return (
     <aside className="cart-dropdown">
@@ -41,6 +47,14 @@ const Cartdropdown = ({ cartObj }) => {
         >
           Checkout
         </Link>
+        <button
+          className={cart.length === 0 ? "hidden" : "cart-clear-btn"}
+          onClick={() => {
+            clearCart();
+          }}
+        >
+          Clear cart
+        </button>
       </div>
     </aside>
   );
