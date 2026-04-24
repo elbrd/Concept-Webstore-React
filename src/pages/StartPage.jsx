@@ -11,10 +11,7 @@ const StartPage = () => {
       <section className="products-section">
         <h2 className="products-title">Collection</h2>
       </section>
-      <Productgrid
-        addToCart={cartObj.addToCart}
-        removeFromCart={cartObj.removeFromCart}
-      />
+      <Productgrid addToCart={cartObj.addToCart} />
     </div>
   );
 };

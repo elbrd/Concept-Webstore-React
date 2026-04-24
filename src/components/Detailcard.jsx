@@ -1,7 +1,12 @@
 import { useState } from "react";
 
-const Detailcard = ({ product, addToCart }) => {
+const Detailcard = ({ product, addToCart, notify }) => {
   const [description, toggleDescription] = useState(false);
+
+  const handleAdd = (product) => {
+    addToCart(product);
+    notify();
+  };
 
   return (
     <>
@@ -46,7 +51,7 @@ const Detailcard = ({ product, addToCart }) => {
 
         <div className="product-bottom">
           <span className="product-price">{Math.ceil(product.price)} sek</span>
-          <button onClick={() => addToCart(product)} className="btn-add">
+          <button onClick={() => handleAdd(product)} className="btn-add">
             ADD TO CART
           </button>
         </div>

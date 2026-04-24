@@ -5,7 +5,7 @@ import { getProduct } from "../scripts/api/api";
 import "../styles/pages/product.css";
 
 const DetailPage = () => {
-  const { cartObj } = useOutletContext();
+  const { cartObj, notify } = useOutletContext();
 
   const { id } = useParams();
 
@@ -22,7 +22,11 @@ const DetailPage = () => {
 
   return (
     <main className="product-page">
-      <Detailcard product={product} addToCart={cartObj.addToCart} />
+      <Detailcard
+        product={product}
+        addToCart={cartObj.addToCart}
+        notify={notify}
+      />
     </main>
   );
 };

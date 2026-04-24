@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Cartdropdown from "./components/Cartdropdown";
 import { useCart } from "./hooks/useCart";
 import { useOrdersStore } from "./stores/useOrdersStore";
+import toast, { Toaster } from "react-hot-toast";
 
 function Layout() {
   const {
@@ -28,6 +29,9 @@ function Layout() {
       setOrders(storedOrders);
     }
   }, []);
+
+  // Toast
+  const notify = () => toast.success("Product succesfully added to cart.");
 
   // Toggle visibility cart dropdown
   const location = useLocation();
@@ -55,7 +59,8 @@ function Layout() {
     <div className="app">
       <Header cartObj={cartObj} />
       {!cartdropdown ? "" : <Cartdropdown cartObj={cartObj} />}
-      <Outlet context={{ cartObj }} />
+      <Toaster />
+      <Outlet context={{ cartObj, notify }} />
       <Footer />
     </div>
   );

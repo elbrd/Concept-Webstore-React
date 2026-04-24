@@ -1,16 +1,12 @@
 import { useNavigate } from "react-router-dom";
 
-const Productcard = ({ product, addToCart, removeFromCart }) => {
+const Productcard = ({ product, addToCart, notify }) => {
   const navigate = useNavigate();
 
   const handleAdd = (e, product) => {
     e.stopPropagation();
     addToCart(product);
-  };
-
-  const handleRemove = (e, product) => {
-    e.stopPropagation();
-    removeFromCart(product);
+    notify();
   };
 
   return (
@@ -36,14 +32,7 @@ const Productcard = ({ product, addToCart, removeFromCart }) => {
           <span className="product-card__price">
             {Math.ceil(product.price)} sek
           </span>
-          <button
-            className="product-card__btn-add"
-            onClick={(e) => {
-              handleRemove(e, product);
-            }}
-          >
-            REMOVE
-          </button>
+
           <button
             className="product-card__btn-add"
             onClick={(e) => {
