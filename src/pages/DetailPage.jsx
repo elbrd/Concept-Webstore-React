@@ -1,14 +1,11 @@
-import { useOutletContext, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Detailcard from "../components/Detailcard";
 import { getProduct } from "../scripts/api/api";
 import "../styles/pages/product.css";
 
 const DetailPage = () => {
-  const { cartObj, notify } = useOutletContext();
-
   const { id } = useParams();
-
   const [product, setProduct] = useState([]);
 
   useEffect(() => {
@@ -22,11 +19,7 @@ const DetailPage = () => {
 
   return (
     <main className="product-page">
-      <Detailcard
-        product={product}
-        addToCart={cartObj.addToCart}
-        notify={notify}
-      />
+      <Detailcard product={product} />
     </main>
   );
 };

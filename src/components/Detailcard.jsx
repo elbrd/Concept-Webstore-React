@@ -1,11 +1,14 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { useCartStore } from "../stores/useCartStore";
 
-const Detailcard = ({ product, addToCart, notify }) => {
+const Detailcard = ({ product }) => {
   const [description, toggleDescription] = useState(false);
+  const addToCart = useCartStore((state) => state.addToCart);
 
   const handleAdd = (product) => {
     addToCart(product);
-    notify();
+    toast.success("Product successfully added to cart.");
   };
 
   return (

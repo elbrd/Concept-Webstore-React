@@ -1,12 +1,15 @@
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useCartStore } from "../stores/useCartStore";
 
-const Productcard = ({ product, addToCart, notify }) => {
+const Productcard = ({ product }) => {
   const navigate = useNavigate();
+  const addToCart = useCartStore((state) => state.addToCart);
 
-  const handleAdd = (e, product) => {
+  const handleAdd = (e) => {
     e.stopPropagation();
     addToCart(product);
-    notify();
+    toast.success("Product successfully added to cart.");
   };
 
   return (
@@ -33,12 +36,7 @@ const Productcard = ({ product, addToCart, notify }) => {
             {Math.ceil(product.price)} sek
           </span>
 
-          <button
-            className="product-card__btn-add"
-            onClick={(e) => {
-              handleAdd(e, product);
-            }}
-          >
+          <button className="product-card__btn-add" onClick={handleAdd}>
             ADD
           </button>
         </div>

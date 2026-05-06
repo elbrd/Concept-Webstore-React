@@ -1,17 +1,9 @@
-import { useEffect, useState } from "react";
+import { useCartStore } from "../stores/useCartStore";
 
-const Cart = ({ cart, toggleCartdropdown }) => {
-  const [cartCount, setCartCount] = useState(0);
-
-  useEffect(() => {
-    let total = 0;
-
-    cart.forEach((item) => {
-      total += item.quantity;
-    });
-
-    setCartCount(total);
-  }, [cart]);
+const Cart = ({ toggleCartdropdown }) => {
+  const cartCount = useCartStore((state) =>
+    state.cart.reduce((sum, item) => sum + item.quantity, 0),
+  );
 
   return (
     <button

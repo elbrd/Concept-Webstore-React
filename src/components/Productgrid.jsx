@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import { getProducts } from "../scripts/api/api";
 import Productcard from "./Productcard";
-import { useOutletContext } from "react-router-dom";
 
-const Productgrid = ({ addToCart }) => {
+const Productgrid = () => {
   const [products, setProducts] = useState([]);
-
-  const { notify } = useOutletContext();
 
   useEffect(() => {
     async function fetchData() {
@@ -19,16 +16,9 @@ const Productgrid = ({ addToCart }) => {
 
   return (
     <main className="product-grid">
-      {products.map((product) => {
-        return (
-          <Productcard
-            product={product}
-            key={product.id}
-            addToCart={addToCart}
-            notify={notify}
-          />
-        );
-      })}
+      {products.map((product) => (
+        <Productcard product={product} key={product.id} />
+      ))}
     </main>
   );
 };

@@ -1,6 +1,10 @@
 import React from "react";
+import { useCartStore } from "../stores/useCartStore";
 
-const Checkoutitems = ({ item, addToCart, removeFromCart }) => {
+const Checkoutitems = ({ item }) => {
+  const addToCart = useCartStore((state) => state.addToCart);
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
+
   return (
     <article className="checkout-item">
       <div className="checkout-item__image">

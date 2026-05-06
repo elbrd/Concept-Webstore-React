@@ -1,6 +1,10 @@
 import "../styles/components/cart.css";
+import { useCartStore } from "../stores/useCartStore";
 
-const Cartitems = ({ item, addToCart, removeFromCart }) => {
+const Cartitems = ({ item }) => {
+  const addToCart = useCartStore((state) => state.addToCart);
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
+
   return (
     <article className="cart-card">
       <section>

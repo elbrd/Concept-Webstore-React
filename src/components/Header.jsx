@@ -1,11 +1,12 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Cart from "./Cart";
 import "../styles/components/navbar.css";
+import { useCartStore } from "../stores/useCartStore";
 
-const Header = ({ cartObj }) => {
-  const { cart, toggleCartdropdown } = cartObj;
-
+const Header = ({ toggleCartdropdown }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const cart = useCartStore((state) => state.cart);
 
   return (
     <header className="header">
