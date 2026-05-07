@@ -1,7 +1,7 @@
+import styles from "./Header.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import Cart from "./Cart";
-import "../styles/components/navbar.css";
-import { useCartStore } from "../stores/useCartStore";
+import Cart from "../Cart";
+import { useCartStore } from "../../stores/useCartStore";
 
 const Header = ({ toggleCartdropdown }) => {
   const navigate = useNavigate();
@@ -9,11 +9,11 @@ const Header = ({ toggleCartdropdown }) => {
   const cart = useCartStore((state) => state.cart);
 
   return (
-    <header className="header">
-      <h1 onClick={() => navigate("/")} className="logo">
+    <header className={styles.header}>
+      <h1 onClick={() => navigate("/")} className={styles.logo}>
         PLACEHOLDER
       </h1>
-      <a onClick={() => navigate("/orders")} className="orders-btn">
+      <a onClick={() => navigate("/orders")} className={styles.ordersBtn}>
         ORDERS
       </a>
       {location.pathname !== "/checkout" ? (

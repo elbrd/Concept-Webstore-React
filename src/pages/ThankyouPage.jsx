@@ -4,14 +4,10 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
 const ThankyouPage = () => {
-  const latestOrder = useOrdersStore((state) => state.latestOrder);
-  const findOrder = useOrdersStore((state) => state.findOrder);
-
   const { ordernumber } = useParams();
+  const orders = useOrdersStore((state) => state.orders);
 
-  useEffect(() => {
-    findOrder(ordernumber);
-  }, []);
+  const order = orders.find((o) => o.ordernumber === ordernumber);
 
   return (
     <main className="thankyou-page">
@@ -30,7 +26,7 @@ const ThankyouPage = () => {
           <h2 id="summary-title">Order summary</h2>
 
           <ul className="order-items">
-            {latestOrder?.items.map((item) => {
+            {order?.items.map((item) => {
               return (
                 <li key={item.id} className="order-item">
                   <span className="item-name">{item.title}</span>
@@ -46,15 +42,15 @@ const ThankyouPage = () => {
           <div className="order-totals">
             <div className="order-line">
               <strong>Order number:</strong>{" "}
-              <span id="order-number">{latestOrder?.ordernumber}</span>
+              <span id="order-number">{order?.ordernumber}</span>
             </div>
             <div className="order-line">
               <strong>Order date:</strong>{" "}
-              <span id="order-date">{latestOrder?.orderdate}</span>
+              <span id="order-date">{order?.orderdate}</span>
             </div>
             <div className="order-line">
               <strong>Total:</strong>{" "}
-              <span id="order-total">{latestOrder?.total} kr</span>
+              <span id="order-total">{order?.total} kr</span>
             </div>
           </div>
 

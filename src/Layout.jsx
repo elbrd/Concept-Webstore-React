@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
 import Footer from "./components/Footer";
-import Header from "./components/Header";
+import Header from "./components/header/Header.jsx";
 import { useEffect, useState } from "react";
 import Cartdropdown from "./components/Cartdropdown";
 import { useOrdersStore } from "./stores/useOrdersStore";
@@ -30,7 +30,11 @@ function Layout() {
   return (
     <div className="app">
       <Header toggleCartdropdown={toggleCartdropdown} />
-      {!cartdropdown ? "" : <Cartdropdown toggleCartdropdown={toggleCartdropdown} />}
+      {!cartdropdown ? (
+        ""
+      ) : (
+        <Cartdropdown toggleCartdropdown={toggleCartdropdown} />
+      )}
       <Toaster />
       <Outlet />
       <Footer />

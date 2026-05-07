@@ -61,3 +61,7 @@
   border: none;
   cursor: pointer;
 }
+
+.btn-add:hover {
+  background: #333;
+}

@@ -7,10 +7,12 @@ import { useCartStore } from "../stores/useCartStore";
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
+
   const { createOrder } = useOrdersStore();
+
   const cart = useCartStore((state) => state.cart);
-  const shipping = useCartStore((state) => state.shipping);
   const clearCart = useCartStore((state) => state.clearCart);
+  const shipping = useCartStore((state) => state.shipping);
   const setShipping = useCartStore((state) => state.setShipping);
   const subtotal = useCartStore((state) => state.getSubtotal());
   const total = useCartStore((state) => state.getTotal());
