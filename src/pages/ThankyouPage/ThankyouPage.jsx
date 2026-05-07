@@ -5,8 +5,8 @@ import { useEffect } from "react";
 
 const ThankyouPage = () => {
   const { ordernumber } = useParams();
-  const orders = useOrdersStore((state) => state.orders);
 
+  const orders = useOrdersStore((state) => state.orders);
   const order = orders.find((o) => o.ordernumber === ordernumber);
 
   return (

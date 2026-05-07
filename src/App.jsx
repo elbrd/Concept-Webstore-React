@@ -5,6 +5,8 @@ import DetailPage from "./pages/DetailPage/DetailPage";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 import ThankyouPage from "./pages/ThankyouPage/ThankyouPage";
 import OrdersPage from "./pages/OrdersPage/OrdersPage";
+import { useEffect } from "react";
+import { useProductStore } from "./stores/useProductStore";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +38,12 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const fetchProducts = useProductStore((state) => state.fetchProducts);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
+
   return <RouterProvider router={router} />;
 }
 
