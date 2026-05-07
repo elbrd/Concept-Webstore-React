@@ -1,0 +1,16 @@
+.startPage {
+  /* Start page container */
+}
+
+.productsSection {
+  padding: 3rem 4rem 1.5rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.productsTitle {
+  font-size: 1.8rem;
+  font-weight: 200;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #111;
+}
