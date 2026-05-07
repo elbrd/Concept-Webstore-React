@@ -1,0 +1,10 @@
+.cartBtn {
+  background: none;
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.cartCount {
+  /* Add minimal styling if needed */
+}

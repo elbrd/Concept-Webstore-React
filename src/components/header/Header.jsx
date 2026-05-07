@@ -1,6 +1,6 @@
 import styles from "./Header.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import Cart from "../Cart";
+import Cart from "../Cart/Cart";
 import { useCartStore } from "../../stores/useCartStore";
 
 const Header = ({ toggleCartdropdown }) => {

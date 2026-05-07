@@ -1,0 +1,60 @@
+.cartCard {
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+}
+
+.cartCard > section {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  gap: 1rem;
+  font-size: 16px;
+}
+
+.cartCardImage {
+  width: 50%;
+}
+
+.cartCardTitle {
+  font-size: 16px;
+  font-weight: 600;
+  opacity: 0.9;
+  grid-column: 1 / 3;
+  align-self: flex-start;
+}
+
+.cartCardPrice {
+  font-size: 14px;
+  opacity: 0.8;
+  justify-self: flex-start;
+}
+
+.cartCardAmount {
+  font-size: 14px;
+  font-weight: 400;
+  opacity: 0.8;
+  grid-row: 3 / 4;
+  justify-self: flex-end;
+}
+
+.cartCard > section > div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  grid-row: 3 / 4;
+}
+
+.plusMinusBtn {
+  background-color: grey;
+  border: none;
+  border-radius: 2px;
+  padding: 0.25rem;
+  aspect-ratio: 3 / 1;
+}
+
+.plusMinusBtn i {
+  color: white;
+  cursor: pointer;
+}

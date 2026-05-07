@@ -1,0 +1,78 @@
+/* orders.css - styles for order list page */
+
+.ordersPage {
+  padding: 4rem;
+  flex-direction: column;
+  place-items: center;
+}
+
+.ordersTitle {
+  font-size: 1.8rem;
+  font-weight: 200;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #111;
+  margin-bottom: 2rem;
+}
+
+.orderCard {
+  background: white;
+  border: 1px solid #f0f0f0;
+  width: 50%;
+  padding: 2rem 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.orderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  gap: 1rem;
+}
+
+.orderNumber {
+  font-weight: normal;
+  flex: 1;
+}
+
+.orderDate {
+  font-size: 0.9rem;
+  color: #666;
+  white-space: nowrap;
+}
+
+.orderTotal {
+  font-weight: normal;
+  margin-top: 0.5rem;
+}
+
+.orderProducts {
+  margin-top: 1rem;
+}
+
+.orderProducts ul {
+  list-style: disc;
+}
+
+.orderProducts li {
+  margin-bottom: 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 0.5rem 1rem;
+  align-items: center;
+  padding: 0.45rem 0.25rem;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.05);
+}
+
+.orderProductsQuantity {
+  opacity: 0.6;
+}
+
+.orderProductsPrice {
+  font-weight: bold;
+}
+
+.ordersEmpty {
+  /* Empty orders message */
+}
