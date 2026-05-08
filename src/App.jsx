@@ -7,6 +7,8 @@ import ThankyouPage from "./pages/ThankyouPage/ThankyouPage";
 import OrdersPage from "./pages/OrdersPage/OrdersPage";
 import { useEffect } from "react";
 import { useProductStore } from "./stores/useProductStore";
+import RegisterPage from "./pages/RegisterPage/RegisterPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +34,14 @@ const router = createBrowserRouter([
       {
         path: "orders",
         element: <OrdersPage />,
+      },
+      {
+        path: "register",
+        element: <RegisterPage />,
+      },
+      {
+        path: "login",
+        element: <LoginPage />,
       },
     ],
   },

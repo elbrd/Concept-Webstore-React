@@ -1,0 +1,33 @@
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #111;
+  letter-spacing: 0.02em;
+  text-transform: capitalize;
+}
+
+.input {
+  padding: 0.875rem 1rem;
+  border: 1px solid #f0f0f0;
+  background: white;
+  font-size: 0.95rem;
+  font-family: Helvetica, Arial, sans-serif;
+  color: #111;
+  transition: all 0.3s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #111;
+  box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.05);
+}
+
+.input::placeholder {
+  color: #ccc;
+}
