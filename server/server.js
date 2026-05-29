@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import { errorHandler } from "./middlewares/errorHandler.middleware.js";
 import productsRouter from "./routes/products.route.js";
 import cartRouter from "./routes/cart.route.js";
+import ordersRouter from "./routes/orders.route.js";
 
 // Config
 const app = express();
@@ -26,6 +27,7 @@ app.use(express.json());
 // Routes
 app.use("/api/products", productsRouter);
 app.use("/api/cart", cartRouter);
+app.use("/api/orders", ordersRouter);
 
 // Database
 database.on("error", (error) => console.log(error));

@@ -23,7 +23,6 @@ router.get("/", async (req, res, next) => {
 // GET single product by id
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
-  console.log(id);
 
   const result = await getProduct(id);
 

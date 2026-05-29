@@ -22,7 +22,7 @@ export const getProducts = async () => {
 // Get single product by id
 export const getProduct = async (id) => {
   try {
-    const result = await Product.findOne({ id });
+    const result = await Product.findById({ _id: id });
 
     if (result) {
       return {
