@@ -1,11 +1,11 @@
-import mongoose from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
-const orderSchema = new mongoose.Schema({
+const orderSchema = new Schema({
   orderId: String,
   userId: String,
   items: Array,
 });
 
-const Order = mongoose.model("Order", orderSchema);
+const Order = model("Order", orderSchema);
 
 export default Order;

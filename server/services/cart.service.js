@@ -60,3 +60,22 @@ export const createCart = async (newCart) => {
     };
   }
 };
+
+// Delete cart
+export const deleteCart = async (userId) => {
+  try {
+    const result = await Cart.deleteOne({ userId });
+
+    if (result) {
+      return {
+        success: true,
+        cart: result,
+      };
+    } else throw new Error("Failed to delete cart");
+  } catch (error) {
+    return {
+      success: false,
+      message: error.message,
+    };
+  }
+};

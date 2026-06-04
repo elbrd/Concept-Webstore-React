@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { populateCart } from "../services/cart.service.js";
+import { deleteCart, populateCart } from "../services/cart.service.js";
 import { createOrder } from "../services/orders.service.js";
 
 const router = Router();
 
 // POST create order
 router.post("/", async (req, res, next) => {
-  const userId = "1";
+  const userId = "6a216d4ecd90e7bb3bc020d8";
 
   // Hämta rätt cart och populera med "hela" produkter
   const result = await populateCart(userId);
@@ -29,7 +29,7 @@ router.post("/", async (req, res, next) => {
 
   // Skapa ny order med hjälp av nyss skapade orderItems
   const order = await createOrder({
-    orderId: "12345",
+    orderId: "55555",
     userId,
     items: orderItems,
   });
@@ -38,6 +38,15 @@ router.post("/", async (req, res, next) => {
     return next({
       success: false,
       message: order.message,
+    });
+  }
+
+  const deleteResult = await deleteCart(userId);
+
+  if (!deleteResult.success) {
+    return next({
+      success: false,
+      message: deleteResult.message,
     });
   }
 

@@ -3,6 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 // import cors from "cors";
 import { errorHandler } from "./middlewares/errorHandler.middleware.js";
+import authRouter from "./routes/auth.route.js";
 import productsRouter from "./routes/products.route.js";
 import cartRouter from "./routes/cart.route.js";
 import ordersRouter from "./routes/orders.route.js";
@@ -25,6 +26,7 @@ app.use(
 app.use(express.json());
 
 // Routes
+app.use("/api/auth", authRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/orders", ordersRouter);
