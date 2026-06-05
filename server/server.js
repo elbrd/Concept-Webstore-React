@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
-// import cors from "cors";
+import cors from "cors";
 import { errorHandler } from "./middlewares/errorHandler.middleware.js";
 import authRouter from "./routes/auth.route.js";
 import productsRouter from "./routes/products.route.js";
@@ -16,13 +16,11 @@ mongoose.connect(process.env.CONNECTION_STRING);
 const database = mongoose.connection;
 
 // Middlewares
-/*
 app.use(
   cors({
     origin: "http://localhost:5173",
   }),
 );
-*/
 app.use(express.json());
 
 // Routes

@@ -6,7 +6,6 @@ dotenv.config();
 
 const seedProducts = async () => {
   try {
-    console.log(process.env.CONNECTION_STRING);
     await mongoose.connect(process.env.CONNECTION_STRING);
 
     const response = await fetch("https://dummyjson.com/products");

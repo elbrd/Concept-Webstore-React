@@ -1,12 +1,16 @@
 import { Router } from "express";
 import { deleteCart, populateCart } from "../services/cart.service.js";
 import { createOrder } from "../services/orders.service.js";
+import mongoose from "mongoose";
+import { authorizeUser } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
+router.use(authorizeUser);
+
 // POST create order
 router.post("/", async (req, res, next) => {
-  const userId = "6a216d4ecd90e7bb3bc020d8";
+  const userId = req.user?.userId ?? null;
 
   // Hämta rätt cart och populera med "hela" produkter
   const result = await populateCart(userId);
@@ -29,7 +33,6 @@ router.post("/", async (req, res, next) => {
 
   // Skapa ny order med hjälp av nyss skapade orderItems
   const order = await createOrder({
-    orderId: "55555",
     userId,
     items: orderItems,
   });

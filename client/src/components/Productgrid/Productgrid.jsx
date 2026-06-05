@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import styles from "./Productgrid.module.css";
-import { getProducts } from "../../scripts/api/api";
 import Productcard from "../Productcard/Productcard";
 import { useProductStore } from "../../stores/useProductStore";
 

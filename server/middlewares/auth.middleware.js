@@ -12,7 +12,6 @@ export const authorizeUser = (req, res, next) => {
     });
 
     const verified = verifyToken(guestToken);
-
     if (!verified.success) {
       return next({
         status: 401,
@@ -28,7 +27,6 @@ export const authorizeUser = (req, res, next) => {
 
   // If token in req = verify token and add to req
   const verified = verifyToken(token);
-
   if (!verified.success) {
     return next({
       status: 401,

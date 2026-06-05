@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import axios from "axios";
+import { getProducts } from "../scripts/api/api";
 
 export const useProductStore = create((set) => ({
   products: [],
@@ -10,12 +10,9 @@ export const useProductStore = create((set) => ({
     set({ loading: true });
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const products = await getProducts();
 
-      const res = await axios.get("https://dummyjson.com/products");
-      console.log(res.data.products);
-
-      set({ products: res.data.products });
+      set({ products });
     } catch (error) {
       console.error(error.message);
       set({ error: "Failed to recieve products..." });

@@ -28,7 +28,7 @@ router.get("/", async (req, res, next) => {
 
 // DELETE clear cart
 router.delete("/", async (req, res, next) => {
-  const userId = req.user.userId;
+  const userId = req.user?.userId || req.guestUser?.userId;
   const result = await getCart(userId);
 
   if (result.success) {
@@ -49,22 +49,9 @@ router.delete("/", async (req, res, next) => {
 // POST add to cart
 router.post("/items", async (req, res, next) => {
   const { productId, quantity } = req.body;
-
   const userId = req.user?.userId ?? null;
-
-  let guestId;
-  let guestToken;
-  if (!userId) {
-    guestId = req.guestUser?.userId ?? null;
-    guestToken = req.guestUser?.guestToken ?? null;
-  }
-
-  if (!userId && !guestId) {
-    return next({
-      success: false,
-      message: "Unable to resolve userId or guestId",
-    });
-  }
+  const guestId = req.guestUser?.userId ?? null;
+  const guestToken = req.guestUser?.guestToken ?? null;
 
   // Check för giltigt productId
   const product = await getProduct(productId);
@@ -77,7 +64,6 @@ router.post("/items", async (req, res, next) => {
 
   // Check för om cart redan finns eller inte
   let cart;
-
   const cartExist = await getCart(userId ? userId : guestId);
   if (cartExist.success) {
     cart = cartExist.cart;
@@ -117,24 +103,11 @@ router.post("/items", async (req, res, next) => {
 // DELETE remove from cart
 router.delete("/items/:productId", async (req, res, next) => {
   const { productId } = req.params;
-
   const userId = req.user?.userId ?? null;
-
-  let guestId;
-  if (!userId) {
-    guestId = req.guestUser?.userId ?? null;
-  }
-
-  if (!userId && !guestId) {
-    return next({
-      success: false,
-      message: "Unable to resolve userId or guestId",
-    });
-  }
+  const guestId = req.guestUser?.userId ?? null;
 
   // Check för giltigt productId
   const product = await getProduct(productId);
-
   if (!product.success) {
     return next({
       success: false,
@@ -144,7 +117,6 @@ router.delete("/items/:productId", async (req, res, next) => {
 
   // Check för om cart finns eller inte
   let cart;
-
   const cartExist = await getCart(userId ? userId : guestId);
   if (cartExist.success) {
     cart = cartExist.cart;

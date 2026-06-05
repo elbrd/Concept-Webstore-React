@@ -10,6 +10,7 @@ export const signToken = (payload) => {
 export const verifyToken = (token) => {
   try {
     const decoded = jwt.verify(token, process.env.MYSUPERSECRET);
+    console.log(decoded);
     return {
       success: true,
       user: decoded,

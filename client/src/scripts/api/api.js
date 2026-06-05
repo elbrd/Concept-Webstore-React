@@ -1,36 +1,42 @@
 import axios from "axios";
 
 export async function getProducts() {
-  const res = await axios.get("https://dummyjson.com/products");
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  const res = await axios.get("http://localhost:8083/api/products");
+  console.log(res.data.products);
   return res.data.products;
 }
 
 export async function getProduct(id) {
-  const res = await axios.get(`https://dummyjson.com/products/${id}`);
+  const res = await axios.get(`http://localhost:8083/api/products/${id}`);
+  console.log(res.data);
   return res.data;
 }
 
-// export async function getProduct(id) {
+/*
+export async function getProduct(id) {
 
-//   try {
-//     const response = await fetch(`https://fakestoreapi.com/products/${id}`);
-//     const product = await response.json();
-//     console.log(product);
-//     return product;
+  try {
+    const response = await fetch(`https://fakestoreapi.com/products/${id}`);
+    const product = await response.json();
+    console.log(product);
+    return product;
 
-//   } catch (error) {
-//     console.error(error.message);
-//   }
-// }
+  } catch (error) {
+    console.error(error.message);
+  }
+}
 
-// export async function getProducts() {
+export async function getProducts() {
 
-//   try {
-//     const response = await fetch(`https://fakestoreapi.com/products`);
-//     const products = await response.json();
-//     return products;
+  try {
+    const response = await fetch(`https://fakestoreapi.com/products`);
+    const products = await response.json();
+    return products;
 
-//   } catch (error) {
-//     console.error(error.message);
-//   }
-// }
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+*/
