@@ -3,12 +3,13 @@ import PasswordInput from "../PasswordInput/PasswordInput";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import styles from "./RegisterForm.module.css";
 import { useEffect, useState } from "react";
-import { useUserStore } from "../../stores/useUserStore";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const RegisterForm = () => {
-  const users = useUserStore((state) => state.users);
-  const registerUser = useUserStore((state) => state.registerUser);
+  const navigate = useNavigate();
 
+  // Fields
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -16,21 +17,24 @@ const RegisterForm = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  // Errors
   const [errors, setErrors] = useState(false);
+  const [dbError, setDbError] = useState(false);
 
-  const handleSubmit = (e) => {
+  // Account created confirmation
+  const [success, setSuccess] = useState(false);
+
+  // Validation of form input and submit to backend
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setSuccess(false);
+    setDbError(false);
     const newErrors = {};
-
-    const findUser = users.find((user) => {
-      return user.email === email;
-    });
 
     if (!firstName) newErrors.firstName = "First name required";
     if (!lastName) newErrors.lastName = "Last name required";
     if (!email) newErrors.email = "Email required";
-    if (findUser) newErrors.emailTaken = "Email is already in use";
     if (email && !email.includes("@")) newErrors.emailFormat = "Invalid email";
     if (!password) newErrors.password = "Password required";
     if (password && password.length < 6)
@@ -43,8 +47,23 @@ const RegisterForm = () => {
     if (Object.keys(newErrors).length > 0) return;
 
     const user = { firstName, lastName, email, password };
-    registerUser(user);
-    console.log("VALID USER:", user);
+    try {
+      const response = await axios.post(
+        "http://localhost:8083/api/auth/register",
+        {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          password: user.password,
+        },
+      );
+      setDbError("");
+      setErrors("");
+      setSuccess(response.data.message);
+      setTimeout(() => navigate("/login"), 3000);
+    } catch (error) {
+      setDbError(error.response.data.message);
+    }
   };
 
   return (
@@ -99,10 +118,10 @@ const RegisterForm = () => {
         }}
       />
 
+      {dbErrors.emailTaken && <ErrorMessage message={dbErrors.emailTaken} />}
       {errors.firstName && <ErrorMessage message={errors.firstName} />}
       {errors.lastName && <ErrorMessage message={errors.lastName} />}
       {errors.email && <ErrorMessage message={errors.email} />}
-      {errors.emailTaken && <ErrorMessage message={errors.emailTaken} />}
       {errors.emailFormat && <ErrorMessage message={errors.emailFormat} />}
       {errors.password && <ErrorMessage message={errors.password} />}
       {errors.passwordLength && (
@@ -112,6 +131,8 @@ const RegisterForm = () => {
         <ErrorMessage message={errors.confirmPassword} />
       )}
 
+      {success && <p>{success}</p>}
+
       <button type="submit" className={styles.submitButton}>
         Register
       </button>
@@ -119,7 +140,12 @@ const RegisterForm = () => {
       <footer className={styles.formFooter}>
         <p className={styles.footerText}>
           Already have an account?{" "}
-          <span className={styles.footerLink}>Login here</span>
+          <span
+            onClick={() => navigate("/login")}
+            className={styles.footerLink}
+          >
+            Login here
+          </span>
         </p>
       </footer>
     </form>

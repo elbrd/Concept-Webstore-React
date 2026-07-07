@@ -1,10 +1,18 @@
 import { create } from "zustand";
+import axios from "axios";
 
-const getStoredCart = () => {
-  const stored = localStorage.getItem("cart");
-  if (stored) {
-    return JSON.parse(stored);
-  } else {
+const getStoredCart = async () => {
+  try {
+    const token = sessionStorage.getItem("token");
+    const response = await axios.get("http://localhost:8083/api/cart", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(response.data.cart);
+    return response.data.cart;
+  } catch (error) {
+    console.log(error.response.data.message);
     return [];
   }
 };

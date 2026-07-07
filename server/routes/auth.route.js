@@ -19,19 +19,20 @@ router.post("/register", async (req, res, next) => {
     });
   }
 
-  const existingUser = await getUser(newUser.username);
+  const existingUser = await getUser(newUser.email);
 
   if (existingUser.success) {
     return next({
       status: 400,
-      message: "Username already exists",
+      message: "Email already exists",
     });
   }
 
   const result = await registerUser({
-    username: newUser.username,
+    firstName: newUser.firstName,
+    lastName: newUser.lastName,
+    email: newUser.email,
     password: await hashPassword(newUser.password),
-    role: "User",
   });
 
   if (result.success) {
@@ -59,14 +60,13 @@ router.post("/login", async (req, res, next) => {
     });
   }
 
-  const result = await getUser(user.username);
+  const result = await getUser(user.email);
 
   if (result.success) {
     if (await comparePasswords(user.password, result.user.password)) {
       const token = signToken({
         userId: result.user._id,
-        username: result.user.username,
-        role: result.user.role,
+        email: result.user.email,
       });
 
       res.status(201).json({

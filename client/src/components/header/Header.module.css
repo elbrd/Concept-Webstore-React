@@ -18,13 +18,16 @@
   cursor: pointer;
 }
 
-.ordersBtn {
+.headerBox {
+  display: flex;
+  gap: 1rem;
+}
+
+.headerBtn {
   background: none;
   border: none;
   font-size: 0.9rem;
   cursor: pointer;
   text-decoration: none;
   color: inherit;
-  margin-right: 1.5rem;
-  margin-left: auto;
 }

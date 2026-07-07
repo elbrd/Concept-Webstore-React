@@ -11,16 +11,21 @@ const Header = ({ toggleCartdropdown }) => {
   return (
     <header className={styles.header}>
       <h1 onClick={() => navigate("/")} className={styles.logo}>
-        PLACEHOLDER
+        CONCEPT WEBSTORE
       </h1>
-      <a onClick={() => navigate("/orders")} className={styles.ordersBtn}>
-        ORDERS
-      </a>
-      {location.pathname !== "/checkout" ? (
-        <Cart cart={cart} toggleCartdropdown={toggleCartdropdown} />
-      ) : (
-        ""
-      )}
+      <div className={styles.headerBox}>
+        <a onClick={() => navigate("/login")} className={styles.headerBtn}>
+          LOGIN
+        </a>
+        <a onClick={() => navigate("/orders")} className={styles.headerBtn}>
+          ORDERS
+        </a>
+        {location.pathname !== "/checkout" ? (
+          <Cart cart={cart} toggleCartdropdown={toggleCartdropdown} />
+        ) : (
+          ""
+        )}
+      </div>
     </header>
   );
 };

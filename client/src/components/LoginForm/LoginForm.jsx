@@ -3,47 +3,63 @@ import PasswordInput from "../PasswordInput/PasswordInput";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import styles from "./LoginForm.module.css";
 import { useEffect, useState } from "react";
-import { useUserStore } from "../../stores/useUserStore";
+import { useAuthStore } from "../../stores/useAuthStore";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const LoginForm = () => {
-  const users = useUserStore((state) => state.users);
-  const activeUser = useUserStore((state) => state.activeUser);
+  const navigate = useNavigate();
+
   const loginUser = useUserStore((state) => state.loginUser);
 
-  useEffect(() => {
-    console.log(activeUser);
-  }, [activeUser]);
-
+  // Fields
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // Errors
   const [errors, setErrors] = useState(false);
+  const [dbError, setDbError] = useState(false);
 
-  const handleSubmit = (e) => {
+  // Logged in confirmation
+  const [success, setSuccess] = useState(false);
+
+  // Validation of form input and submit to backend
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validation
+    setSuccess(false);
+    setDbError(false);
     const newErrors = {};
 
-    const findUser = users.find((user) => {
-      return user.email === email;
-    });
-
     if (!email) newErrors.email = "Email required";
-    if (!findUser) newErrors.emailTaken = "Email is not in use";
     if (email && !email.includes("@")) newErrors.emailFormat = "Invalid email";
     if (!password) newErrors.password = "Password required";
-    if (password && findUser && findUser.password !== password)
-      newErrors.wrongPassword = "Wrong password";
 
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length > 0) return;
 
+    // Submit to backend
     const user = { email, password };
-    loginUser(user);
-    setEmail("");
-    setPassword("");
-    console.log("VALID USER:", user);
+    try {
+      const response = await axios.post(
+        "http://localhost:8083/api/auth/login",
+        {
+          email: user.email,
+          password: user.password,
+        },
+      );
+      // Save token in sessionStorage
+      loginUser(response.data.token);
+
+      setDbError("");
+      setErrors("");
+      setSuccess(response.data.message);
+      setTimeout(() => navigate("/"), 3000);
+    } catch (error) {
+      setDbError(error.response.data.message);
+    }
   };
   return (
     <form className={styles.form} noValidate onSubmit={handleSubmit}>
@@ -66,11 +82,12 @@ const LoginForm = () => {
         }}
       />
 
+      {dbError && <ErrorMessage message={dbError} />}
       {errors.email && <ErrorMessage message={errors.email} />}
-      {errors.emailTaken && <ErrorMessage message={errors.emailTaken} />}
       {errors.emailFormat && <ErrorMessage message={errors.emailFormat} />}
       {errors.password && <ErrorMessage message={errors.password} />}
-      {errors.wrongPassword && <ErrorMessage message={errors.wrongPassword} />}
+
+      {success && <p>{success}</p>}
 
       <button type="submit" className={styles.submitButton}>
         Login
@@ -79,7 +96,12 @@ const LoginForm = () => {
       <footer className={styles.formFooter}>
         <p className={styles.footerText}>
           Don't have an account?{" "}
-          <span className={styles.footerLink}>Register here</span>
+          <span
+            onClick={() => navigate("/register")}
+            className={styles.footerLink}
+          >
+            Register here
+          </span>
         </p>
       </footer>
     </form>

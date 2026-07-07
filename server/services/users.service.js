@@ -1,9 +1,9 @@
 import User from "../models/users.model.js";
 
 // Get user
-export const getUser = async (username) => {
+export const getUser = async (email) => {
   try {
-    const result = await User.findOne({ username });
+    const result = await User.findOne({ email });
 
     if (result) {
       return {
