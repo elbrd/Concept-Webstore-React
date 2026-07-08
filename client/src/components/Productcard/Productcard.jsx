@@ -9,8 +9,8 @@ const Productcard = ({ product }) => {
 
   const handleAdd = (e) => {
     e.stopPropagation();
-    addToCart(product);
-    toast.success("Product successfully added to cart.");
+    addToCart(product._id);
+    // toast.success("Product successfully added to cart.");
   };
 
   return (

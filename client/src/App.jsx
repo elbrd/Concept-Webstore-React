@@ -9,6 +9,8 @@ import { useEffect } from "react";
 import { useProductStore } from "./stores/useProductStore";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
+import { useCartStore } from "./stores/useCartStore";
+import { useAuthStore } from "./stores/useAuthStore";
 
 const router = createBrowserRouter([
   {
@@ -48,11 +50,20 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  // Fetch all products from backend
   const fetchProducts = useProductStore((state) => state.fetchProducts);
 
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
+
+  // Fetch logged in user cart
+  const token = useAuthStore((state) => state.token);
+  const fetchCart = useCartStore((state) => state.fetchCart);
+
+  useEffect(() => {
+    fetchCart();
+  }, [token, fetchCart]);
 
   return <RouterProvider router={router} />;
 }

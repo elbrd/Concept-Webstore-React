@@ -21,7 +21,9 @@ const Cartdropdown = ({ toggleCartdropdown }) => {
         {cart.length === 0 ? (
           <p className={styles.emptyCart}>Your cart is empty.</p>
         ) : (
-          cart.map((item) => <Cartitems item={item} key={item.id} />)
+          cart.items.map((item) => (
+            <Cartitems item={item} key={item.productId.id} />
+          ))
         )}
       </div>
       <div className={styles.cartFooter}>

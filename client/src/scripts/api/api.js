@@ -4,13 +4,11 @@ export async function getProducts() {
   await new Promise((resolve) => setTimeout(resolve, 2000));
 
   const res = await axios.get("http://localhost:8083/api/products");
-  console.log(res.data.products);
   return res.data.products;
 }
 
 export async function getProduct(id) {
   const res = await axios.get(`http://localhost:8083/api/products/${id}`);
-  console.log(res.data);
   return res.data;
 }
 

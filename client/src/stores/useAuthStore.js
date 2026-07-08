@@ -1,40 +1,31 @@
 import { create } from "zustand";
 
 export const useAuthStore = create((set) => ({
-  token: sessionStorage.getItem("token"),
+  token:
+    sessionStorage.getItem("token") || sessionStorage.getItem("guestToken"),
 
   loginUser: (token) => {
+    sessionStorage.removeItem("guestToken");
     sessionStorage.setItem("token", token);
+
+    set({
+      token,
+    });
   },
 
   logoutUser: () => {
-    sessionStorage.setItem("token", null);
+    sessionStorage.removeItem("token");
+
+    set({
+      token: null,
+    });
+  },
+
+  setGuestToken: (token) => {
+    sessionStorage.setItem("guestToken", token);
+
+    set({
+      token,
+    });
   },
 }));
-
-/*
-users: getUsers(),
-
-registerUser: (user) => {
-  let updated;
-  set((state) => {
-    updated = [...state.users, user];
-    return { users: updated };
-  });
-  
-  persistUsers(updated);
-},
-
-const getUsers = () => {
-  const stored = localStorage.getItem("users");
-  if (stored) {
-    return JSON.parse(stored);
-  } else {
-    return [];
-  }
-};
-
-const persistUsers = (users) => {
-  localStorage.setItem("users", JSON.stringify(users));
-};
-*/

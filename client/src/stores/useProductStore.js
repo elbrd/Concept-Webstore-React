@@ -11,7 +11,6 @@ export const useProductStore = create((set) => ({
 
     try {
       const products = await getProducts();
-
       set({ products });
     } catch (error) {
       console.error(error.message);

@@ -10,7 +10,7 @@ import axios from "axios";
 const LoginForm = () => {
   const navigate = useNavigate();
 
-  const loginUser = useUserStore((state) => state.loginUser);
+  const loginUser = useAuthStore((state) => state.loginUser);
 
   // Fields
   const [email, setEmail] = useState("");

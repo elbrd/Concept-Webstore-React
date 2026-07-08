@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createCart, getCart } from "../services/cart.service.js";
+import { createCart, getCart, populateCart } from "../services/cart.service.js";
 import { getProduct } from "../services/products.service.js";
 import { authorizeUser } from "../middlewares/auth.middleware.js";
 import mongoose from "mongoose";
@@ -11,7 +11,7 @@ router.use(authorizeUser);
 // GET cart
 router.get("/", async (req, res, next) => {
   const userId = req.user?.userId || req.guestUser?.userId;
-  const result = await getCart(userId);
+  const result = await populateCart(userId);
 
   if (result.success) {
     res.status(200).json({

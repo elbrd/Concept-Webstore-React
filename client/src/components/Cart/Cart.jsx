@@ -1,10 +1,11 @@
+import { useEffect } from "react";
 import { useCartStore } from "../../stores/useCartStore";
 import styles from "./Cart.module.css";
 
 const Cart = ({ toggleCartdropdown }) => {
-  // const cartCount = useCartStore((state) =>
-  //   state.cart.reduce((sum, item) => sum + item.quantity, 0),
-  // );
+  const cartCount = useCartStore((state) =>
+    state.cart.items.reduce((sum, item) => sum + item.quantity, 0),
+  );
 
   return (
     <button
@@ -13,7 +14,7 @@ const Cart = ({ toggleCartdropdown }) => {
         toggleCartdropdown(true);
       }}
     >
-      CART (<span className={styles.cartCount}>1</span>)
+      CART (<span className={styles.cartCount}>{cartCount}</span>)
     </button>
   );
 };

@@ -8,12 +8,18 @@ const Cartitems = ({ item }) => {
   return (
     <article className={styles.cartCard}>
       <section>
-        <img src={item.image} alt="" className={styles.cartCardImage} />
+        <img
+          src={item.productId.thumbnail}
+          alt=""
+          className={styles.cartCardImage}
+        />
       </section>
 
       <section>
-        <h3 className={styles.cartCardTitle}>{item.title}</h3>
-        <p className={styles.cartCardPrice}>{Math.ceil(item.price)} sek</p>
+        <h3 className={styles.cartCardTitle}>{item.productId.title}</h3>
+        <p className={styles.cartCardPrice}>
+          {Math.ceil(item.productId.price)} sek
+        </p>
 
         <div>
           <button
