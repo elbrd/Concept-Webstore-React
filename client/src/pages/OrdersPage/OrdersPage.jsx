@@ -10,12 +10,12 @@ const OrdersPage = () => {
       {orders.length !== 0 ? (
         orders.map((order) => {
           return (
-            <article className={styles.orderCard} key={order.ordernumber}>
+            <article className={styles.orderCard} key={order._id}>
               <div className={styles.orderHeader}>
                 <div className={styles.orderNumber}>
-                  <strong>Order:</strong> {order.ordernumber}
+                  <strong>Order:</strong> {order._id}
                 </div>
-                <div className={styles.orderDate}>{order.orderdate}</div>
+                <div className={styles.orderDate}>{order.orderDate}</div>
               </div>
 
               <div className={styles.orderTotal}>
@@ -27,7 +27,7 @@ const OrdersPage = () => {
                 <ul>
                   {order.items.map((item) => {
                     return (
-                      <li key={item.id}>
+                      <li key={item.productId}>
                         <span>{item.title}</span>
                         <span className={styles.orderProductsQuantity}>
                           x{item.quantity}

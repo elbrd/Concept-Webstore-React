@@ -31,13 +31,15 @@ const Cartdropdown = ({ toggleCartdropdown }) => {
           {total} sek
         </p>
         <Link
-          className={`${styles.cartCheckoutBtn} ${cart.length === 0 ? styles.cartCheckoutBtnDisabled : ""}`}
-          to={cart.length === 0 ? "#" : "checkout"}
+          className={`${styles.cartCheckoutBtn} ${cart.items.length === 0 ? styles.cartCheckoutBtnDisabled : ""}`}
+          to={cart.items.length === 0 ? "#" : "checkout"}
         >
           Checkout
         </Link>
         <button
-          className={cart.length === 0 ? styles.hidden : styles.cartClearBtn}
+          className={
+            cart.items.length === 0 ? styles.hidden : styles.cartClearBtn
+          }
           onClick={() => {
             clearCart();
           }}

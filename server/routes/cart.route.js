@@ -41,7 +41,7 @@ router.delete("/", async (req, res, next) => {
   } else {
     next({
       success: false,
-      message: result.message,
+      message: "Failed clearing cart",
     });
   }
 });
@@ -95,7 +95,7 @@ router.post("/items", async (req, res, next) => {
 
   res.status(201).json({
     success: true,
-    message: "Item/s successfully added",
+    message: "Item successfully added",
     guestToken,
   });
 });

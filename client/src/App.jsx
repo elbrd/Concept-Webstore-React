@@ -11,6 +11,7 @@ import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import { useCartStore } from "./stores/useCartStore";
 import { useAuthStore } from "./stores/useAuthStore";
+import { useOrdersStore } from "./stores/useOrdersStore";
 
 const router = createBrowserRouter([
   {
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
         element: <CheckoutPage />,
       },
       {
-        path: "thankyou/:ordernumber",
+        path: "thankyou/:orderId",
         element: <ThankyouPage />,
       },
       {
@@ -57,13 +58,16 @@ function App() {
     fetchProducts();
   }, [fetchProducts]);
 
-  // Fetch logged in user cart
+  // Fetch logged in user cart and orders
   const token = useAuthStore((state) => state.token);
+  // const orders = useOrdersStore((state) => state.orders);
   const fetchCart = useCartStore((state) => state.fetchCart);
+  const fetchOrders = useOrdersStore((state) => state.fetchOrders);
 
   useEffect(() => {
     fetchCart();
-  }, [token, fetchCart]);
+    fetchOrders();
+  }, [token, fetchCart, fetchOrders]);
 
   return <RouterProvider router={router} />;
 }

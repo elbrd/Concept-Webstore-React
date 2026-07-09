@@ -4,10 +4,11 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
 const ThankyouPage = () => {
-  const { ordernumber } = useParams();
+  const { orderId } = useParams();
 
   const orders = useOrdersStore((state) => state.orders);
-  const order = orders.find((o) => o.ordernumber === ordernumber);
+  const order = orders.find((o) => o._id === orderId);
+  console.log(order);
 
   return (
     <main className={styles.thankyouPage}>
@@ -28,7 +29,7 @@ const ThankyouPage = () => {
           <ul className={styles.orderItems}>
             {order?.items.map((item) => {
               return (
-                <li key={item.id} className={styles.orderItem}>
+                <li key={item.productId} className={styles.orderItem}>
                   <span className={styles.itemName}>{item.title}</span>
                   <span className={styles.itemQty}>x{item.quantity}</span>
                   <span className={styles.itemPrice}>
@@ -41,12 +42,12 @@ const ThankyouPage = () => {
 
           <div className={styles.orderTotals}>
             <div className={styles.orderLine}>
-              <strong>Order number:</strong>{" "}
-              <span id="order-number">{order?.ordernumber}</span>
+              <strong>Order:</strong>{" "}
+              <span id="order-number">{order?._id}</span>
             </div>
             <div className={styles.orderLine}>
               <strong>Order date:</strong>{" "}
-              <span id="order-date">{order?.orderdate}</span>
+              <span id="order-date">{order?.orderDate}</span>
             </div>
             <div className={styles.orderLine}>
               <strong>Total:</strong>{" "}

@@ -24,14 +24,14 @@ const Cartitems = ({ item }) => {
         <div>
           <button
             className={styles.plusMinusBtn}
-            onClick={() => removeFromCart(item)}
+            onClick={() => removeFromCart(item.productId._id)}
           >
             <i className="fa-solid fa-minus"></i>
           </button>
 
           <button
             className={styles.plusMinusBtn}
-            onClick={() => addToCart(item)}
+            onClick={() => addToCart(item.productId._id)}
           >
             <i className="fa-solid fa-plus"></i>
           </button>

@@ -1,51 +1,47 @@
 import { create } from "zustand";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "./useAuthStore";
+import axios from "axios";
 
 export const useOrdersStore = create((set, get) => ({
   orders: [],
 
-  setOrders: (storedOrders) => {
-    localStorage.setItem("orders", JSON.stringify(storedOrders));
+  fetchOrders: async () => {
+    try {
+      const token = useAuthStore.getState().token;
 
-    set({
-      orders: storedOrders,
-    });
+      const response = await axios.get("http://localhost:8083/api/orders", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      set({ orders: response.data.orders });
+      console.log(response.data.orders);
+    } catch (error) {
+      console.log(error.response?.data?.message || error.message);
+    }
   },
 
-  createOrder: (cart, subtotal, shipping, total, orderNumber) => {
-    const orderDate = new Date();
-    const orderDateFormatted = `${orderDate.toLocaleString("sv-SE")}`;
+  createOrder: async (shipping) => {
+    try {
+      const token = useAuthStore.getState().token;
 
-    const newOrder = {
-      ordernumber: orderNumber,
-      orderdate: orderDateFormatted,
-      items: [...cart],
-      shipping: {
-        cost: shipping,
-      },
-      subtotal,
-      total,
-    };
+      const response = await axios.post(
+        "http://localhost:8083/api/orders",
+        {
+          shipping,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
 
-    set((state) => {
-      const updatedOrders = [...state.orders, newOrder];
-
-      localStorage.setItem("orders", JSON.stringify(updatedOrders));
-
-      return { orders: updatedOrders };
-    });
+      await get().fetchOrders();
+      return response.data.order._id;
+    } catch (error) {
+      console.log(error.response?.data?.message || error.message);
+    }
   },
 }));
-
-/*
-findOrder: (orderNmbr) => {
-  set((state) => {
-    const order = state.orders.find((o) => o.ordernumber === orderNmbr);
-    return { latestOrder: order };
-  });
-},
-
-findOrder: (orderNmbr) => {
-  return get().orders.find((o) => o.ordernumber === orderNmbr);
-},
-*/

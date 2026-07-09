@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import Checkoutitems from "../../components/Checkoutitems/Checkoutitems";
 import styles from "./CheckoutPage.module.css";
-import { useOrdersStore } from "../../stores/useOrdersStore";
 import { useNavigate } from "react-router-dom";
 import { useCartStore } from "../../stores/useCartStore";
+import { useOrdersStore } from "../../stores/useOrdersStore";
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
 
-  const { createOrder } = useOrdersStore();
+  const createOrder = useOrdersStore((state) => state.createOrder);
 
   const cart = useCartStore((state) => state.cart);
   const clearCart = useCartStore((state) => state.clearCart);
@@ -17,14 +17,13 @@ const CheckoutPage = () => {
   const subtotal = useCartStore((state) => state.getSubtotal());
   const total = useCartStore((state) => state.getTotal());
 
-  const completeOrderHandler = () => {
-    if (cart.length === 0) return;
+  const completeOrderHandler = async () => {
+    if (cart.items.length === 0) return;
 
-    const orderNumber = Date.now().toString().slice(-6);
-
-    createOrder(cart, subtotal, shipping, total, orderNumber);
-    clearCart();
-    navigate(`/thankyou/${orderNumber}`);
+    const orderId = await createOrder(shipping);
+    if (orderId) {
+      navigate(`/thankyou/${orderId}`);
+    }
   };
 
   return (
@@ -33,8 +32,8 @@ const CheckoutPage = () => {
         <h2 className={styles.checkoutTitle}>Order Summary</h2>
 
         <div className={styles.checkoutItems}>
-          {cart.map((item) => (
-            <Checkoutitems item={item} key={item.id} />
+          {cart.items.map((item) => (
+            <Checkoutitems item={item} key={item.productId._id} />
           ))}
         </div>
 
