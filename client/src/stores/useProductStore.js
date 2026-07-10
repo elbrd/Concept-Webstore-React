@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getProducts } from "../scripts/api/api";
+import { getProducts } from "../utils/products";
 
 export const useProductStore = create((set) => ({
   products: [],

@@ -2,6 +2,7 @@ import { create } from "zustand";
 import axios from "axios";
 import { useAuthStore } from "./useAuthStore";
 import toast from "react-hot-toast";
+import { API_URL } from "../utils/api";
 
 const calculateSubtotal = (cart) => {
   return Math.ceil(
@@ -21,15 +22,16 @@ export const useCartStore = create((set, get) => ({
   fetchCart: async () => {
     try {
       const token = useAuthStore.getState().token;
+      if (!token) return;
 
-      const response = await axios.get("http://localhost:8083/api/cart", {
+      const response = await axios.get(`${API_URL}/cart`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       set({ cart: response.data.cart });
-      console.log(response.data.cart);
     } catch (error) {
+      set({ cart: { items: [] } });
       console.log(error.response?.data?.message || error.message);
     }
   },
@@ -48,7 +50,7 @@ export const useCartStore = create((set, get) => ({
         : {};
 
       const response = await axios.post(
-        "http://localhost:8083/api/cart/items",
+        `${API_URL}/cart/items`,
         {
           productId: _id,
           quantity: 1,
@@ -82,7 +84,7 @@ export const useCartStore = create((set, get) => ({
         : {};
 
       const response = await axios.delete(
-        `http://localhost:8083/api/cart/items/${_id}`,
+        `${API_URL}/cart/items/${_id}`,
 
         config,
       );
@@ -99,24 +101,41 @@ export const useCartStore = create((set, get) => ({
     }
   },
 
-  getSubtotal: () => calculateSubtotal(get().cart),
-  getTotal: () => calculateSubtotal(get().cart) + get().shipping,
-
   clearCart: async () => {
     try {
       const token = useAuthStore.getState().token;
 
-      const response = await axios.delete("http://localhost:8083/api/cart", {
+      const response = await axios.patch(`${API_URL}/cart`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
+      set({ shipping: 0 });
       await get().fetchCart();
     } catch (error) {
       console.log(error.response?.data?.message || error.message);
     }
   },
 
+  deleteCart: async () => {
+    try {
+      const token = useAuthStore.getState().token;
+
+      const response = await axios.delete(`${API_URL}/cart`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      set({ shipping: 0 });
+      console.log(response.data.message);
+    } catch (error) {
+      console.log(error.response?.data?.message || error.message);
+    }
+  },
+
+  getSubtotal: () => calculateSubtotal(get().cart),
+  getTotal: () => calculateSubtotal(get().cart) + get().shipping,
   setShipping: (shipping) => set({ shipping }),
 }));

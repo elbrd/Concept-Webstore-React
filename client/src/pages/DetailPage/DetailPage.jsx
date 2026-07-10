@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Detailcard from "../../components/Detailcard/Detailcard";
-import { getProduct } from "../../scripts/api/api";
+import { getProduct } from "../../utils/products";
 import styles from "./DetailPage.module.css";
 import { useProductStore } from "../../stores/useProductStore";
 
@@ -19,14 +19,3 @@ const DetailPage = () => {
 };
 
 export default DetailPage;
-
-// const [product, setProduct] = useState([]);
-
-// useEffect(() => {
-//   async function fetchData(id) {
-//     const data = await getProduct(id);
-//     setProduct(data);
-//   }
-
-//   fetchData(id);
-// }, [id]);

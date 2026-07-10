@@ -1,10 +1,17 @@
 import { create } from "zustand";
+import { useCartStore } from "./useCartStore";
 
 export const useAuthStore = create((set) => ({
   token:
     sessionStorage.getItem("token") || sessionStorage.getItem("guestToken"),
 
-  loginUser: (token) => {
+  loginUser: async (token) => {
+    const guestUser = !!sessionStorage.getItem("guestToken");
+    if (guestUser) {
+      const deleteCart = useCartStore.getState().deleteCart;
+      await deleteCart();
+    }
+
     sessionStorage.removeItem("guestToken");
     sessionStorage.setItem("token", token);
 
@@ -26,6 +33,17 @@ export const useAuthStore = create((set) => ({
 
     set({
       token,
+    });
+  },
+
+  removeGuestToken: () => {
+    const guestUser = !!sessionStorage.getItem("guestToken");
+    if (!guestUser) return;
+
+    sessionStorage.removeItem("guestToken");
+
+    set({
+      token: null,
     });
   },
 }));

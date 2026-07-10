@@ -5,6 +5,7 @@ import styles from "./RegisterForm.module.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_URL } from "../../utils/api";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -48,15 +49,12 @@ const RegisterForm = () => {
 
     const user = { firstName, lastName, email, password };
     try {
-      const response = await axios.post(
-        "http://localhost:8083/api/auth/register",
-        {
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-          password: user.password,
-        },
-      );
+      const response = await axios.post(`${API_URL}/auth/register`, {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        password: user.password,
+      });
       setDbError("");
       setErrors("");
       setSuccess(response.data.message);
@@ -118,7 +116,7 @@ const RegisterForm = () => {
         }}
       />
 
-      {dbErrors.emailTaken && <ErrorMessage message={dbErrors.emailTaken} />}
+      {dbError.emailTaken && <ErrorMessage message={dbError.emailTaken} />}
       {errors.firstName && <ErrorMessage message={errors.firstName} />}
       {errors.lastName && <ErrorMessage message={errors.lastName} />}
       {errors.email && <ErrorMessage message={errors.email} />}

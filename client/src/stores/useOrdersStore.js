@@ -1,7 +1,8 @@
 import { create } from "zustand";
-import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "./useAuthStore";
+import { useCartStore } from "./useCartStore";
 import axios from "axios";
+import { API_URL } from "../utils/api";
 
 export const useOrdersStore = create((set, get) => ({
   orders: [],
@@ -10,13 +11,12 @@ export const useOrdersStore = create((set, get) => ({
     try {
       const token = useAuthStore.getState().token;
 
-      const response = await axios.get("http://localhost:8083/api/orders", {
+      const response = await axios.get(`${API_URL}/orders`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       set({ orders: response.data.orders });
-      console.log(response.data.orders);
     } catch (error) {
       console.log(error.response?.data?.message || error.message);
     }
@@ -25,9 +25,11 @@ export const useOrdersStore = create((set, get) => ({
   createOrder: async (shipping) => {
     try {
       const token = useAuthStore.getState().token;
+      const fetchCart = useCartStore.getState().fetchCart;
+      const removeGuestToken = useAuthStore.getState().removeGuestToken;
 
       const response = await axios.post(
-        "http://localhost:8083/api/orders",
+        `${API_URL}/orders`,
         {
           shipping,
         },
@@ -39,6 +41,8 @@ export const useOrdersStore = create((set, get) => ({
       );
 
       await get().fetchOrders();
+      await fetchCart();
+      removeGuestToken();
       return response.data.order._id;
     } catch (error) {
       console.log(error.response?.data?.message || error.message);

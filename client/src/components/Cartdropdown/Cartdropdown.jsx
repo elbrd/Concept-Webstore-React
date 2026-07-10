@@ -6,7 +6,7 @@ import { useCartStore } from "../../stores/useCartStore";
 const Cartdropdown = ({ toggleCartdropdown }) => {
   const cart = useCartStore((state) => state.cart);
   const clearCart = useCartStore((state) => state.clearCart);
-  const total = useCartStore((state) => state.getTotal());
+  const subtotal = useCartStore((state) => state.getSubtotal());
 
   return (
     <aside className={styles.cartDropdown}>
@@ -28,7 +28,7 @@ const Cartdropdown = ({ toggleCartdropdown }) => {
       </div>
       <div className={styles.cartFooter}>
         <p className={cart.length === 0 ? styles.hidden : styles.cartTotal}>
-          {total} sek
+          {subtotal} sek
         </p>
         <Link
           className={`${styles.cartCheckoutBtn} ${cart.items.length === 0 ? styles.cartCheckoutBtnDisabled : ""}`}

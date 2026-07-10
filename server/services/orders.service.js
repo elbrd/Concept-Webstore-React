@@ -1,6 +1,6 @@
 import Order from "../models/order.model.js";
 
-// Get user orders
+// Get orders
 export const getOrders = async (userId) => {
   try {
     const result = await Order.find({ userId });

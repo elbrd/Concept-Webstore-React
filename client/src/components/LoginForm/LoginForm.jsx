@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useAuthStore } from "../../stores/useAuthStore";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_URL } from "../../utils/api";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -43,20 +44,17 @@ const LoginForm = () => {
     // Submit to backend
     const user = { email, password };
     try {
-      const response = await axios.post(
-        "http://localhost:8083/api/auth/login",
-        {
-          email: user.email,
-          password: user.password,
-        },
-      );
+      const response = await axios.post(`${API_URL}/auth/login`, {
+        email: user.email,
+        password: user.password,
+      });
       // Save token in sessionStorage
       loginUser(response.data.token);
 
       setDbError("");
       setErrors("");
       setSuccess(response.data.message);
-      setTimeout(() => navigate("/"), 3000);
+      setTimeout(() => navigate("/"), 2000);
     } catch (error) {
       setDbError(error.response.data.message);
     }

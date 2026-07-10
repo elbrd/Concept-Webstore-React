@@ -1,5 +1,10 @@
 import { Router } from "express";
-import { createCart, getCart, populateCart } from "../services/cart.service.js";
+import {
+  createCart,
+  deleteCart,
+  getCart,
+  populateCart,
+} from "../services/cart.service.js";
 import { getProduct } from "../services/products.service.js";
 import { authorizeUser } from "../middlewares/auth.middleware.js";
 import mongoose from "mongoose";
@@ -26,8 +31,8 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// DELETE clear cart
-router.delete("/", async (req, res, next) => {
+// PATCH clear cart
+router.patch("/", async (req, res, next) => {
   const userId = req.user?.userId || req.guestUser?.userId;
   const result = await getCart(userId);
 
@@ -42,6 +47,24 @@ router.delete("/", async (req, res, next) => {
     next({
       success: false,
       message: "Failed clearing cart",
+    });
+  }
+});
+
+// DELETE remove cart
+router.delete("/", async (req, res, next) => {
+  const userId = req.user?.userId;
+  const result = await deleteCart(userId);
+
+  if (result.success) {
+    res.status(200).json({
+      success: true,
+      message: "Cart successfully removed",
+    });
+  } else {
+    next({
+      success: false,
+      message: result.message,
     });
   }
 });

@@ -8,7 +8,7 @@ const router = Router();
 
 router.use(authorizeUser);
 
-// GET user orders
+// GET orders
 router.get("/", async (req, res, next) => {
   const userId = req.user?.userId;
   const result = await getOrders(userId);

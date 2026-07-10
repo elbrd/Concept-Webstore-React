@@ -8,7 +8,6 @@ const ThankyouPage = () => {
 
   const orders = useOrdersStore((state) => state.orders);
   const order = orders.find((o) => o._id === orderId);
-  console.log(order);
 
   return (
     <main className={styles.thankyouPage}>

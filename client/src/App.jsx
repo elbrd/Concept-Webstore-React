@@ -5,13 +5,14 @@ import DetailPage from "./pages/DetailPage/DetailPage";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 import ThankyouPage from "./pages/ThankyouPage/ThankyouPage";
 import OrdersPage from "./pages/OrdersPage/OrdersPage";
-import { useEffect } from "react";
-import { useProductStore } from "./stores/useProductStore";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
+import { useEffect } from "react";
+import { useProductStore } from "./stores/useProductStore";
 import { useCartStore } from "./stores/useCartStore";
 import { useAuthStore } from "./stores/useAuthStore";
 import { useOrdersStore } from "./stores/useOrdersStore";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -36,7 +37,11 @@ const router = createBrowserRouter([
       },
       {
         path: "orders",
-        element: <OrdersPage />,
+        element: (
+          <ProtectedRoute>
+            <OrdersPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "register",
@@ -58,15 +63,15 @@ function App() {
     fetchProducts();
   }, [fetchProducts]);
 
-  // Fetch logged in user cart and orders
+  // Fetch user cart, and if logged in orders
   const token = useAuthStore((state) => state.token);
-  // const orders = useOrdersStore((state) => state.orders);
+  const loggedInUser = !!sessionStorage.getItem("token");
   const fetchCart = useCartStore((state) => state.fetchCart);
   const fetchOrders = useOrdersStore((state) => state.fetchOrders);
 
   useEffect(() => {
     fetchCart();
-    fetchOrders();
+    if (loggedInUser) fetchOrders();
   }, [token, fetchCart, fetchOrders]);
 
   return <RouterProvider router={router} />;
