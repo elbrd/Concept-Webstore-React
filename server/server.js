@@ -18,7 +18,7 @@ const database = mongoose.connection;
 // Middlewares
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "https://concept-webstore.vercel.app"],
   }),
 );
 app.use(express.json());
