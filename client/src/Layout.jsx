@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
+import Header from "./components/HeaderNew/Header";
 import Footer from "./components/Footer/Footer";
-import Header from "./components/Header/Header.js";
 import { useEffect, useState } from "react";
 import Cartdropdown from "./components/Cartdropdown/Cartdropdown";
 import { Toaster } from "react-hot-toast";
